@@ -1,0 +1,165 @@
+*,*::after, *::before{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://res.cloudinary.com/dfnpjjy2w/raw/upload/v1719515221/static/fonts/icomoon/style.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Qwigley&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+ES:wght@100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body{
+   @apply font-poppins;  
+   background-color: white;
+}
+
+.bg-body-image{
+    position: relative;
+    z-index: 1;
+}
+
+.bg-body-image::after{
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1719143148/travel-bg-2.jpg');
+    opacity: 0.1;
+}
+
+
+
+/*----------------Animation for Menu Button----------------------------------*/
+.menu-animation-open{
+    animation-name: menuAnimationOpen;
+    animation-duration: 0.3s;
+}
+.menu-animation-close{
+    animation-name: menuAnimationClose;
+    animation-duration: 0.3s;
+
+}
+
+@keyframes menuAnimationOpen{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes menuAnimationClose{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+
+.menu-button input{
+    opacity: 0%;
+    position: absolute;
+    width: 2.8em;
+    height: 2.8em;
+    cursor: pointer;
+}
+
+.menu-button label{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 2em;
+    height: 0.2em;
+    border-radius: 0.2em;
+    background: white;
+    transition: 0.4s;    
+}
+
+.menu-button label::after{
+    content: "";
+    position: absolute;
+    top: -0.75em;
+    left: 0em;
+    width: 2em;
+    height: 0.2em;
+    border-radius: 0.3em;
+    background: white;
+    transition: 0.4s;
+}
+
+.menu-button input:checked + label:after {
+    top: 0em;
+    left: -1.5em;
+    width: 2.5em;
+    rotate: 45deg;
+    background: white;
+    transition: 0.4s;
+}
+
+
+.menu-button label:before {
+    content: "";
+    position: absolute;
+    bottom: -0.75em;
+    right: 0;
+    width: 2em;
+    height: 0.2em;
+    border-radius: 0.3em;
+    background: white;
+    transition: 0.4s;
+}
+.menu-button input:checked + label:before {
+    bottom: 0em;
+    right: -1em;
+    width: 2.5em;
+    rotate: -45deg;
+    background: white;
+    transition: 0.4s;
+}
+
+.menu-button input:checked + label{
+    width: 0rem;
+    transition: 0.4s;
+}
+
+
+/*-----------------Animtation for Menu button END--------------------*/
+
+
+/*--------------CSS for Cards -------------*/
+.card{
+    font-family: 'Arial';
+    font-size: 12px;
+    transform: translateX(0px) scale(1) ;
+}
+
+
+
+/*--------------CSS for Book Tour Form-----------*/
+
+.bookTour h5{
+    @apply text-2xl min-[900px]:text-3xl text-[#2F6080] font-bold;
+}
+
+.bookTour label, .bookTour span{
+    @apply text-xl min-[900px]:text-2xl  text-gray-500 font-bold flex-[0_0_40%];
+}
+.bookTour input{
+    @apply w-full text-lg min-[900px]:text-xl text-[#82A0B3] p-2 min-[900px]:p-4 border-[1px] border-[#82A0B3] focus:ring-0 focus:outline-none flex-[0_0_60%];
+}
+
+.light-blue-button{
+    @apply py-4 px-12 bg-[#14B9D5] md:text-2xl text-white rounded-lg font-bold;
+}
