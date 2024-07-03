@@ -22,17 +22,6 @@ const Home = ()=>{
     }
 
 
-    useEffect(()=>{
-        
-        const body = document.getElementsByTagName("body")[0];
-        body.classList.add("bg-body-image");
-
-        return ()=>{
-            body.classList.remove("bg-body-image");
-        }
-
-    },[]);
-
 
 
 

@@ -1,4 +1,5 @@
 import react from 'react';
+import {useEffect} from 'react';
 import Layout from '../Components/Layout';
 import PackageCard from '../Components/PackageCard';
 
@@ -12,6 +13,19 @@ const Packages = ()=>{
             height: "70vh",
 
     }
+
+
+    useEffect(()=>{
+        
+        const body = document.getElementsByTagName("body")[0];
+        body.classList.add("bg-body-image");
+
+        return ()=>{
+            body.classList.remove("bg-body-image");
+        }
+
+    },[]);
+
 
 
     return (

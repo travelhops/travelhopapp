@@ -21,7 +21,7 @@ const Checkout = ()=>{
                 </div>
             </main>
 
-            <main className="w-full py-12">
+            <main className="w-full py-12 font-arial">
                 <div className="mx-auto w-[90%] flex flex-col md:flex-row">
 
                     <div className="flex-[0_0_60%] text-[#2F6080]">
