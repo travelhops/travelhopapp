@@ -11,7 +11,7 @@ const Testimonials = ()=>{
 
             <div className="flex-[0_0_80%] bg-gray-100 py-12">
                 <div className="w-[95%] mx-auto text-xl text-right py-8 [&>button]:ml-auto">
-                    <button className="text-white bg-green-600 p-4 rounded-lg shadow-lg">Create Testimonial</button>
+                    <button className="green-button">Create Testimonial</button>
                 </div>
                 <div className="w-[95%] mx-auto p-12 bg-white shadow-xl">
                     <table className="table">
@@ -28,19 +28,19 @@ const Testimonials = ()=>{
                                 <td>1</td>
                                 <td>Suyash Yadav</td>
                                 <td>Stars</td>
-                                <td>Delete</td>
+                                <th><button className="red-button">Delete</button></th>
                             </tr>
                              <tr>
                                 <td>2</td>
                                 <td>Suyash Yadav</td>
                                 <td>Stars</td>
-                                <td>Delete</td>
+                                <th><button className="red-button">Delete</button></th>
                             </tr>                           
                             <tr>
                                 <td>3</td>
                                 <td>Suyash Yadav</td>
                                 <td>Stars</td>
-                                <td>Delete</td>
+                                <th><button className="red-button">Delete</button></th>
                             </tr>
                         </tbody>
                     </table>

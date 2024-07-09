@@ -13,7 +13,7 @@ const Tours = ()=>{
                         <input className="w-full border-0 outline-none focus:ring-0 p-2 font-light rounded-lg" type="text" name="search" placeholder="search"/>
                         <i className="fa-solid fa-magnifying-glass text-white p-4 rounded-lg bg-[#64CCC5]" aria-hidden></i>
                     </div>
-                    <button className="text-xl text-white bg-[#64CCC5] p-4 rounded-lg shadow-lg"><i className="fa-solid fa-upload" aria-hidden></i> Add Tour</button>
+                    <button className="cyan-button"><i className="fa-solid fa-upload" aria-hidden></i> Add Tour</button>
                 </div>
 
                 <div className="w-[95%] mx-auto p-12 bg-white shadow-xl">
@@ -32,22 +32,22 @@ const Tours = ()=>{
                                 <td>1</td>
                                 <td>Dubai Tour Package</td>
                                 <td>₹299.00</td>
-                                <td>Edit</td>
-                                <td>Delete</td>
+                                <td><button className="green-button">Edit</button></td>
+                                <td><button className="red-button">Delete</button></td>
                             </tr>
                             <tr>
-                                <td>2</td>
+                                <td>1</td>
                                 <td>Dubai Tour Package</td>
                                 <td>₹299.00</td>
-                                <td>Edit</td>
-                                <td>Delete</td>
+                                <td><button className="green-button">Edit</button></td>
+                                <td><button className="red-button">Delete</button></td>
                             </tr>
-                             <tr>
-                                <td>3</td>
+                            <tr>
+                                <td>1</td>
                                 <td>Dubai Tour Package</td>
                                 <td>₹299.00</td>
-                                <td>Edit</td>
-                                <td>Delete</td>
+                                <td><button className="green-button">Edit</button></td>
+                                <td><button className="red-button">Delete</button></td>
                             </tr>
                         </tbody>
                     </table>

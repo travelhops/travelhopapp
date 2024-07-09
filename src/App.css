@@ -197,3 +197,27 @@ body{
 .starContainer input[type="checkbox"]:checked + label{
     @apply text-cyan-500;
 }
+
+/*-------------Admin Forms---------*/
+.adminSideForm{
+    @apply grid grid-cols-[1fr_3fr] gap-y-8 gap-x-8;
+}
+.adminSideForm input, .adminSideForm textarea{
+    @apply p-3 text-gray-600 border-[1px] border-gray-600 rounded-lg outline-none;
+}
+.adminSideForm input::focus, .adminSideForm textarea::focus{
+    @apply ring-0 outline-none;
+}
+
+
+.green-button{
+    @apply w-fit text-white bg-green-600 p-4 rounded-lg shadow-lg;
+}
+
+.red-button{
+    @apply w-fit text-white bg-red-500 p-4 rounded-lg shadow-lg;
+}
+
+.cyan-button{
+    @apply w-fit text-white bg-[#64CCC5] p-4 rounded-lg shadow-lg;
+}

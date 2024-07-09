@@ -38,7 +38,7 @@ const createReactApp = async (location) => {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta 
                 name="description"
-                content="App created using ReactJS Webpack"
+                content=""
                 data-rh="true"
             />
             <link href="/static/style/bundle.css" rel="stylesheet">

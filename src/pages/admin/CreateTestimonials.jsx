@@ -18,12 +18,22 @@ const CreateTestimonials = ()=>{
             <div className="flex-[0_0_20%]">
                 <AdminPanel/>
             </div>
-            <div className="flex-[0_0_80%] bg-gray-100 py-12">
-                <StarSelection ref={starSelection}/>
+            <div className="flex-[0_0_80%] w-full bg-gray-100 py-12">
+                <form className="flex p-8 text-xl" method="POST">
+                    <div className="adminSideForm">
+                        <label className="mr-8" htmlFor="clientName">Client Name</label>
+                        <input type="text" id="clientName" name="clientName" placeholder="Client Name" />
+
+                        <label className="mr-8" htmlFor="rating">Ratings</label>
+                        <StarSelection ref={starSelection} />
+                        <label className="mr-8" htmlFor="reviews">Reviews</label>
+
+                        <textarea id="reviews" rows="5" placeholder="Description..."></textarea>
+                        <span></span>
+                        <button className="green-button">Add Testimonial</button>
+                    </div>
+                </form>
             </div>
-
-            <button onClick={getStars}>Get</button>
-
         </div>
  
     );
