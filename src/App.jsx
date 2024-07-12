@@ -14,6 +14,10 @@ import Gallery from './pages/admin/Gallery';
 import Booking from './pages/admin/Booking';
 import ViewBooking from './pages/admin/ViewBooking';
 import CreateTestimonials from './pages/admin/CreateTestimonials';
+import CreateTours from './pages/admin/CreateTours';
+
+
+import Login from './pages/admin/Login';
 
 const App = () => {
 
@@ -22,12 +26,14 @@ const App = () => {
         <Route path="/" element={ <Home/> } />
         <Route path="/about" element={ <About/> } />
         <Route path="/packages" element={ <Packages/> } />
-        <Route path="/packages/temp-pkg" element={ <PackageInfoAndBooking/> } />
+          <Route path="/packages/:slug" element={ <PackageInfoAndBooking/> } />
         <Route path="/checkout" element={ <Checkout/> } />
         <Route path="/checkout/confirmation" element={ <CheckoutConfirmation/> } />
 
 
+        <Route path="/admin/login" element={ <Login/> } />
         <Route path="/admin/tours" element={ <Tours/> } />
+        <Route path="/admin/tours/create" element={ <CreateTours/> } />
         <Route path="/admin/testimonials" element={ <Testimonials/> } />
         <Route path="/admin/testimonials/create" element={ <CreateTestimonials/> } />
         <Route path="/admin/gallery" element={ <Gallery/> } />

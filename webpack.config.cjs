@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const Dotenv = require('dotenv-webpack');
+
 /**
  * Load JS and JSX files through Babel
  */
@@ -61,7 +63,8 @@ const serverConfig = {
           PORT: 3001
         }),
         miniCssExtractPlugin,
-      require('tailwindcss'),
+        require('tailwindcss'),
+        new Dotenv(),
       ],
       resolve
 };
@@ -87,7 +90,8 @@ const clientConfig = {
       template: `${__dirname}/src/index.html`
     }),
     miniCssExtractPlugin,
-      require('tailwindcss'),
+    require('tailwindcss'),
+    new Dotenv(),
   ],
   resolve
 };

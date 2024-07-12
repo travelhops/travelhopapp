@@ -1,7 +1,35 @@
 import react from 'react';
 import AdminPanel from '../../Components/admin/AdminPanel';
+import {useState, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+
+import FloatingMessage from '../../Components/FloatingMessage';
+
+import axios from 'axios';
 
 const Tours = ()=>{
+
+    const [tours, setTours] = useState([]);
+
+    const navigate = useNavigate();
+
+    const API_URL = process.env.API_URL;
+
+    const getTours = ()=>{
+       axios.get(API_URL+"/api/getPackages").then(res=>{
+            setTours(res.data.packages);
+        });
+    }
+
+    const addTour = ()=>{
+        navigate('/admin/tours/create');
+    }
+
+    useEffect(()=>{
+        getTours();
+    }, []);
+
+
     return (
         <div className="w-full flex">
             <div className="flex-[0_0_20%]">
@@ -13,7 +41,7 @@ const Tours = ()=>{
                         <input className="w-full border-0 outline-none focus:ring-0 p-2 font-light rounded-lg" type="text" name="search" placeholder="search"/>
                         <i className="fa-solid fa-magnifying-glass text-white p-4 rounded-lg bg-[#64CCC5]" aria-hidden></i>
                     </div>
-                    <button className="cyan-button"><i className="fa-solid fa-upload" aria-hidden></i> Add Tour</button>
+                    <button className="cyan-button !w-fit" onClick={addTour}><i className="fa-solid fa-upload" aria-hidden></i> Add Tour</button>
                 </div>
 
                 <div className="w-[95%] mx-auto p-12 bg-white shadow-xl">
@@ -28,28 +56,19 @@ const Tours = ()=>{
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Dubai Tour Package</td>
-                                <td>₹299.00</td>
-                                <td><button className="green-button">Edit</button></td>
-                                <td><button className="red-button">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Dubai Tour Package</td>
-                                <td>₹299.00</td>
-                                <td><button className="green-button">Edit</button></td>
-                                <td><button className="red-button">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Dubai Tour Package</td>
-                                <td>₹299.00</td>
-                                <td><button className="green-button">Edit</button></td>
-                                <td><button className="red-button">Delete</button></td>
-                            </tr>
-                        </tbody>
+                            {tours.length > 0?tours.map((tour, index)=>{
+                                return (
+                                <tr key={index}>
+                                    <td>{index+1}</td>
+                                    <td>{tour.tourName}</td>
+                                    <td>₹{tour.price}</td>
+                                    <td><button className="green-button">Edit</button></td>
+                                    <td><button className="red-button">Delete</button></td>
+                                </tr>
+                                )
+                            }):""}
+
+                          </tbody>
                     </table>
                 </div>
             </div>

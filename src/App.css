@@ -177,7 +177,7 @@ body{
     @apply !text-black;
 }
 .table th, td{
-    @apply text-gray-700 text-center p-8 border-[1px] border-gray-200 border-collapse;
+    @apply text-gray-700 text-center p-4 border-[1px] border-gray-200 border-collapse;
 
 }
 
@@ -200,24 +200,76 @@ body{
 
 /*-------------Admin Forms---------*/
 .adminSideForm{
-    @apply grid grid-cols-[1fr_3fr] gap-y-8 gap-x-8;
+    @apply grid grid-cols-[1fr_3fr] items-center gap-y-8 gap-x-8;
 }
+
+.adminSideForm label{
+    @apply w-fit;
+}
+
 .adminSideForm input, .adminSideForm textarea{
-    @apply p-3 text-gray-600 border-[1px] border-gray-600 rounded-lg outline-none;
+    @apply p-3 text-gray-600 border-[1px] border-gray-400 rounded-sm outline-none;
 }
+
+.adminSideForm input{
+    @apply w-[400px];
+}
+
 .adminSideForm input::focus, .adminSideForm textarea::focus{
     @apply ring-0 outline-none;
 }
 
 
+.green-button, .red-button, .cyan-button{
+    @apply w-fit text-white p-3 rounded-sm shadow-lg cursor-pointer;
+}
+
 .green-button{
-    @apply w-fit text-white bg-green-600 p-4 rounded-lg shadow-lg;
+    @apply bg-green-600;
 }
 
 .red-button{
-    @apply w-fit text-white bg-red-500 p-4 rounded-lg shadow-lg;
+    @apply bg-red-500;
 }
 
 .cyan-button{
-    @apply w-fit text-white bg-[#64CCC5] p-4 rounded-lg shadow-lg;
+    @apply bg-[#64CCC5];
+}
+
+
+
+
+/*Floating Message */
+.floatingMessage {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  bottom: 20vh;
+  right: 2vw;
+  color: white;
+  height: 50px;
+  width: 200px;
+  @apply shadow-2xl;
+}
+
+.floatingMessage .timer {
+  width: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  bottom: 5px;
+  left: 2%;
+  border-radius: 3px;
+  @apply shadow-xl;
+  animation: runProgress 3s linear forwards 0s;
+}
+@keyframes runProgress {
+  0% {
+    width: 96%;
+  }
+  100% {
+    width: 0%;
+  }
 }

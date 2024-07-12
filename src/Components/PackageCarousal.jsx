@@ -7,12 +7,9 @@ const PackageCarousal = ({children, ...props})=>{
 
     let i = 0;
     //Index for large margin for cards
-    let marginIndex = null; 
 
 
     const carousalRef = useRef(null);
-
-
 
     const getMarginIndex = ()=>{
         if(window.screen.width >= 1280)
@@ -23,10 +20,13 @@ const PackageCarousal = ({children, ...props})=>{
             return 0;
     }
 
+    let marginIndex = getMarginIndex(); 
 
     useEffect(()=>{
 
-        marginIndex = getMarginIndex();
+        if(carousalRef.current.querySelectorAll(".card").length < 3){
+            marginIndex = carousalRef.current.querySelectorAll(".card").length-1
+        }
 
         if(props.reverse === "true"){
 
@@ -93,7 +93,6 @@ const PackageCarousal = ({children, ...props})=>{
 
         const margin = parseInt((window.getComputedStyle(cards[0]).marginBottom).substring(0, 2));
 
-        console.log(margin);
         let totalCardWidth = cardWidth+(margin*2);
 
 
@@ -101,6 +100,7 @@ const PackageCarousal = ({children, ...props})=>{
 
         cards[i].style.transform = `translateX(${matrix[4]}px) scale(0)`;
         cards[i].style.opacity = "0";
+
 
 
         if(props.reverse == "true"){
@@ -145,7 +145,6 @@ const PackageCarousal = ({children, ...props})=>{
 
 
         if(i <= 0){
-            console.log("hii");
             return;
         }
 

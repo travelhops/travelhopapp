@@ -1,9 +1,14 @@
 import react from 'react';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import Layout from '../Components/Layout';
 import PackageCard from '../Components/PackageCard';
 
+import axios from 'axios';
+
 const Packages = ()=>{
+
+    const [packages, setPackages] = useState([]);
+    const API_URL = process.env.API_URL;
 
     const backgroundImageCss = {
             backgroundImage: "url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1719609610/packages-bg.jpg')",
@@ -15,17 +20,26 @@ const Packages = ()=>{
     }
 
 
+    const getPackages = ()=>{
+        axios.get(API_URL+"/api/getPackages").then(res=>{
+            setPackages(res.data.packages);
+        });
+    }
+
+
     useEffect(()=>{
         
         const body = document.getElementsByTagName("body")[0];
         body.classList.add("bg-body-image");
+
+        getPackages();
+
 
         return ()=>{
             body.classList.remove("bg-body-image");
         }
 
     },[]);
-
 
 
     return (
@@ -43,30 +57,11 @@ const Packages = ()=>{
 
             <main className="w-full flex justify-center py-12">
                 <div className="w-[90%] lg:w-[1330px] flex flex-wrap [&>div]:flex-[0_0_calc(100%-3em)] [&>div]:min-[990px]:flex-[0_0_calc(33.33%-3em)] [&>div]:md:flex-[0_0_calc(50%-3em)]">
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
-                    <PackageCard/>
+
+                    {(packages.length > 0)?packages.map((pkg, index)=>{
+                        return (<PackageCard pkg={pkg} key={index}/>)
+                    }):"No Packages"}
+
                 </div>
             </main>
 

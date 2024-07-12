@@ -10,7 +10,14 @@ import TestimonialCard from "./../Components/TestimonialCard";
 import TestimonialCarousal from "./../Components/TestimonialCarousal";
 import GalleryPhoto from "./../Components/GalleryPhoto";
 
+
+import axios from 'axios';
+
 const Home = ()=>{
+
+    const [internationalPackages, setInternationalPackages] = useState([]);
+    const [domesticPackages, setDomesticPackages] = useState([]);
+    const API_URL = process.env.API_URL;
 
     const backgroundImageCss = {
             backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3618697478991597) 50% ), linear-gradient( to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3618697478991597) 20% ), url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1714766884/hero-image.jpg')",
@@ -21,9 +28,24 @@ const Home = ()=>{
 
     }
 
+    const getInternationalPackages = ()=>{
+        axios.get(API_URL+"/api/getPackages?packageType=international&isTopPackage=true").then(res=>{
+            setInternationalPackages(res.data.packages);
+        });
+    }
 
+    const getDomesticPackages = ()=>{
+        axios.get(API_URL+"/api/getPackages?packageType=domestic&isTopPackage=true").then(res=>{
+            setDomesticPackages(res.data.packages);
+        });
+    }
 
+    useEffect(()=>{
 
+        getInternationalPackages();
+        getDomesticPackages();
+
+    }, []);
 
     return (
         <Layout>
@@ -57,23 +79,20 @@ const Home = ()=>{
                         </p>
                         <div className="flex items-center mt-6">
                             <div className="flex items-center justify-center w-10 h-10 2xl:w-14 2xl:h-14 bg-[#637A42] rounded-full mr-4">
-                                <i area-hidden="true" className="fa-solid fa-arrow-right text-white"></i>
+                                <i className="fa-solid fa-arrow-right text-white" aria-hidden></i>
                             </div>
                             <p className="uppercase text-nowrap tracking-[0.2em] text-sm">Explore All programs</p>
                         </div>
                     </div>
                 </div>
 
-                <PackageCarousal>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                </PackageCarousal>
+                {internationalPackages.length > 0?(
+                    <PackageCarousal>
+                        {internationalPackages.map((pkg, index)=>{
+                             return (<PackageCard pkg={pkg} key={index}/>)
+                        })}
+                    </PackageCarousal>
+                ):""}
 
                 
             </main>
@@ -81,15 +100,13 @@ const Home = ()=>{
             {/*Top Domestic Packages Start*/}
             <main className="w-full md:w-[95%] mx-auto flex justify-center items-center flex-col-reverse py-16 md:flex-row">
                  
-                 <PackageCarousal reverse="true">
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                     <PackageCard/>
-                 </PackageCarousal>
+                {domesticPackages.length > 0?(
+                    <PackageCarousal reverse="true">
+                        {domesticPackages.map((pkg, index)=>{
+                             return (<PackageCard pkg={pkg} key={index}/>)
+                        })}
+                    </PackageCarousal>
+                ):""}
 
                 <div className="w-[80%] md:w-full flex-[20%]  xl:ml-12 xl:mr-18 md:ml-6 md:mr-6">
                     <div className="flex flex-col float-right">
