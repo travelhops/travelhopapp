@@ -50,7 +50,7 @@ const resolve = {
 
 const serverConfig = {
       target: 'node',
-      mode: 'development',
+      mode: 'production',
       entry: './server/server.jsx',
       output: {
         path: path.join(__dirname, '/dist'),
@@ -72,7 +72,7 @@ const serverConfig = {
 
 const clientConfig = {
   target: 'web',
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.jsx',
   output: {
     path: path.join(__dirname, '/dist'),

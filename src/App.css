@@ -221,7 +221,7 @@ body{
 
 
 .green-button, .red-button, .cyan-button{
-    @apply w-fit text-white p-3 rounded-sm shadow-lg cursor-pointer;
+    @apply w-fit text-white py-3 px-6 rounded-lg shadow-lg cursor-pointer;
 }
 
 .green-button{

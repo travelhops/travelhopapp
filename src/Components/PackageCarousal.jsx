@@ -12,9 +12,9 @@ const PackageCarousal = ({children, ...props})=>{
     const carousalRef = useRef(null);
 
     const getMarginIndex = ()=>{
-        if(window.screen.width >= 1280)
+        if(window.screen.width >= 1536)
             return 2;
-        else if(window.screen.width >= 768 && window.screen.width < 1280)
+        else if(window.screen.width >= 768 && window.screen.width < 1536)
             return 1;
         else
             return 0;
@@ -69,11 +69,11 @@ const PackageCarousal = ({children, ...props})=>{
 
 
         let numberOfCards = 1;
-        if(window.screen.width >= 1024){
+        if(window.screen.width >= 1536){
             numberOfCards = 3;
         }
 
-        if(window.screen.width < 1024 && window.screen.width >= 768){
+        if(window.screen.width < 1280 && window.screen.width >= 768){
             numberOfCards = 2;
         }
 
@@ -84,6 +84,8 @@ const PackageCarousal = ({children, ...props})=>{
         const cardWidth = carousal.querySelector(".card").offsetWidth;
         
         const cards = carousal.querySelectorAll(".card");
+
+        console.log(numberOfCards);
 
         if(i >= cards.length-numberOfCards)
                 return;
@@ -205,7 +207,7 @@ const PackageCarousal = ({children, ...props})=>{
 
 
     return (
-        <div className="carousal relative w-full lg:ml-12 px-6 md:px-12 pb-12 flex overflow-auto md:overflow-hidden flex-[65%] hideScrollbar [&>div]:flex-[0_0_calc(100%-2.4em)] [&>div]:xl:flex-[0_0_calc(33.33%-2em)] [&>div]:md:flex-[0_0_calc(50%-1em)]" ref={carousalRef}>
+        <div className="carousal relative w-full lg:ml-12 px-6 md:px-12 pb-12 flex overflow-auto md:overflow-hidden flex-[65%] hideScrollbar [&>div]:flex-[0_0_calc(100%-2.4em)] [&>div]:2xl:flex-[0_0_calc(33.33%-2em)] [&>div]:md:flex-[0_0_calc(50%-1em)]" ref={carousalRef}>
 
             <button className="absolute h-14 w-14 hidden md:flex justify-center items-center top-1/2 left-0 z-10 p-4 bg-white/[0.5] rounded-full shadow-xl duration-300 hover:bg-[#14B9D5] hover:text-white" onClick={(props.reverse === "true")?rightButton: leftButton}><i aria-hidden className="fa-solid fa-arrow-left pointer-events-none"></i></button>
 

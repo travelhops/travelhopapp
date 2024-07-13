@@ -3,6 +3,8 @@ import {useState, useEffect} from 'react';
 import AdminPanel from '../../Components/admin/AdminPanel';
 import FloatingMessage from '../../Components/FloatingMessage';
 
+import Cookies from 'js-cookie';
+
 import axios from 'axios';
 
 
@@ -95,22 +97,16 @@ const CreateTours = ()=>{
 
     const handleIncludesChange = (event)=>{
         const index = parseInt(event.target.getAttribute("index"));
-
         const temp = includes;
         temp[index] = event.target.value;
         setIncludes([...temp]);
-
-        console.log(temp);
     }
 
     const handleExcludesChange = (event)=>{
         const index = parseInt(event.target.getAttribute("index"));
-
         const temp = excludes;
         temp[index] = event.target.value;
         setExcludes([...temp]);
-
-        console.log(temp);
     }
 
 
@@ -122,17 +118,13 @@ const CreateTours = ()=>{
 
     const handleTourPlanChange = (event)=>{
         const index = parseInt(event.target.getAttribute("index"));
-
         const temp = tourPlan;
         temp[index] = event.target.value;
         setTourPlan([...temp]);
-
-        console.log(temp);
     }
 
     const handleImagesChange = (event)=>{
         const temp = event.target.files;
-        
         const arr = [];
         Array.from(temp).forEach((file)=>{
             arr.push(file);
@@ -182,7 +174,8 @@ const CreateTours = ()=>{
 
         const config = {
             headers: {
-                'content-type' : 'multipart/form-data'
+                'content-type' : 'multipart/form-data',
+                'x-access-token': Cookies.get('token')
             }
         };
 

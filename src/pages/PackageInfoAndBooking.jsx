@@ -183,7 +183,7 @@ const MainComponent = (props)=>{
                             <span className="text-2xl !text-[#14B9D5] text-right">₹{(props.pkg.price)*pax}</span>
                         </div>
 
-                        <div className="w-full flex pt-12">
+                        <div className="w-full flex pt-4 md:pt-12">
                             <button className="light-blue-button mx-auto">Book Now</button>
                         </div>
                     </form>

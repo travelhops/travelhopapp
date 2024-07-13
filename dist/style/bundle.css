@@ -1,22 +1,7 @@
-/*!*********************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/App.css ***!
-  \*********************************************************************************************************/
 @import url(https://res.cloudinary.com/dfnpjjy2w/raw/upload/v1719515221/static/fonts/icomoon/style.css);
-/*!*************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/App.css (1) ***!
-  \*************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Qwigley&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);
-/*!*************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/App.css (2) ***!
-  \*************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Playwrite+ES:wght@100..400&display=swap);
-/*!*************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/App.css (3) ***!
-  \*************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
-/*!*************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/App.css (4) ***!
-  \*************************************************************************************************************/
 *,*::after, *::before{
     padding: 0;
     margin: 0;
@@ -711,6 +696,9 @@ video {
 .mt-8{
     margin-top: 2rem;
 }
+.mt-auto{
+    margin-top: auto;
+}
 .line-clamp-4{
     overflow: hidden;
     display: -webkit-box;
@@ -991,9 +979,6 @@ video {
 .text-nowrap{
     text-wrap: nowrap;
 }
-.rounded-2xl{
-    border-radius: 1rem;
-}
 .rounded-\[0_0_0_50px_\/_0_0_0_50px\]{
     border-radius: 0 0 0 50px / 0 0 0 50px;
 }
@@ -1094,6 +1079,10 @@ video {
     --tw-bg-opacity: 1;
     background-color: rgb(74 222 128 / var(--tw-bg-opacity));
 }
+.bg-green-500{
+    --tw-bg-opacity: 1;
+    background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+}
 .bg-red-500{
     --tw-bg-opacity: 1;
     background-color: rgb(239 68 68 / var(--tw-bg-opacity));
@@ -1126,9 +1115,6 @@ video {
 }
 .p-0{
     padding: 0px;
-}
-.p-0\.5{
-    padding: 0.125rem;
 }
 .p-1{
     padding: 0.25rem;
@@ -1208,6 +1194,9 @@ video {
 }
 .pt-20{
     padding-top: 5rem;
+}
+.pt-4{
+    padding-top: 1rem;
 }
 .text-center{
     text-align: center;
@@ -1298,6 +1287,9 @@ video {
 }
 .tracking-\[0\.2em\]{
     letter-spacing: 0.2em;
+}
+.tracking-widest{
+    letter-spacing: 0.1em;
 }
 .\!text-\[\#14B9D5\]{
     --tw-text-opacity: 1 !important;
@@ -1747,8 +1739,11 @@ body{
     width: -moz-fit-content;
     width: fit-content;
     cursor: pointer;
-    border-radius: 0.125rem;
-    padding: 0.75rem;
+    border-radius: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
     --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -2195,6 +2190,10 @@ body{
         padding-bottom: 0px;
     }
 
+    .md\:pt-12{
+        padding-top: 3rem;
+    }
+
     .md\:text-2xl{
         font-size: 1.5rem;
         line-height: 2rem;
@@ -2546,9 +2545,9 @@ body{
         flex: 0 0 calc(33.33% - 3em);
     }
 }
-@media (min-width: 1280px){
+@media (min-width: 1536px){
 
-    .\[\&\>div\]\:xl\:flex-\[0_0_calc\(33\.33\%-2em\)\]>div{
+    .\[\&\>div\]\:2xl\:flex-\[0_0_calc\(33\.33\%-2em\)\]>div{
         flex: 0 0 calc(33.33% - 2em);
     }
 }

@@ -2,6 +2,7 @@ import react from 'react';
 import AdminPanel from '../../Components/admin/AdminPanel';
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import FloatingMessage from '../../Components/FloatingMessage';
 
@@ -10,6 +11,7 @@ import axios from 'axios';
 const Tours = ()=>{
 
     const [tours, setTours] = useState([]);
+    const [floatingMessage, setFloatingMessage] = useState({});
 
     const navigate = useNavigate();
 
@@ -23,6 +25,37 @@ const Tours = ()=>{
 
     const addTour = ()=>{
         navigate('/admin/tours/create');
+    }
+
+    const handleFloatingMessage = (msg, color, time)=>{
+        setFloatingMessage({msg: msg, color: color});
+
+        setTimeout(()=>{
+            setFloatingMessage({});
+        }, time);
+    }
+
+
+    const deleteTour = (event)=>{
+        const index = parseInt(event.target.parentNode.parentNode.getAttribute("index"));
+        const id = tours[index].id;
+
+        const config = {
+            headers: {
+                'x-access-token': Cookies.get('token')
+            }
+        }
+        axios.delete(API_URL+"/api/deletePackage/"+id, config).then(res=>{
+            if(res.data.success){
+                handleFloatingMessage("Tour Deleted", "bg-green-500", 4000);
+                
+                const newTours = [...tours.slice(0, index), ...tours.slice(index+1, tours.length)];
+                setTours(newTours);
+            }
+            else{
+                handleFloatingMessage("Something went wrong", "bg-red-500", 5000);
+            }
+        });
     }
 
     useEffect(()=>{
@@ -44,6 +77,8 @@ const Tours = ()=>{
                     <button className="cyan-button !w-fit" onClick={addTour}><i className="fa-solid fa-upload" aria-hidden></i> Add Tour</button>
                 </div>
 
+                {Object.keys(floatingMessage).length > 0? <FloatingMessage message={floatingMessage.msg} color={floatingMessage.color} />: ""}
+
                 <div className="w-[95%] mx-auto p-12 bg-white shadow-xl">
                     <table className="table">
                         <thead>
@@ -58,12 +93,12 @@ const Tours = ()=>{
                         <tbody>
                             {tours.length > 0?tours.map((tour, index)=>{
                                 return (
-                                <tr key={index}>
+                                <tr key={index} index={index}>
                                     <td>{index+1}</td>
                                     <td>{tour.tourName}</td>
                                     <td>₹{tour.price}</td>
                                     <td><button className="green-button">Edit</button></td>
-                                    <td><button className="red-button">Delete</button></td>
+                                    <td><button className="red-button" onClick={deleteTour}>Delete</button></td>
                                 </tr>
                                 )
                             }):""}

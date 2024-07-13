@@ -1,6 +1,7 @@
 import react from 'react';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 import axios from 'axios';
 
@@ -33,7 +34,10 @@ const Login = ()=>{
             }
 
             if(res.data.login){
-               navigate('/admin/tours');
+                if(res.data.user){
+                    Cookies.set('token', res.data.user.token, {expires: 7, secure: true});
+                    navigate('/admin/tours');
+                }
             }
         });
     }
