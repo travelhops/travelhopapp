@@ -18,6 +18,7 @@ const Home = ()=>{
     const [internationalPackages, setInternationalPackages] = useState([]);
     const [domesticPackages, setDomesticPackages] = useState([]);
     const API_URL = process.env.API_URL;
+    console.log(API_URL);
 
     const backgroundImageCss = {
             backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3618697478991597) 50% ), linear-gradient( to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3618697478991597) 20% ), url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1714766884/hero-image.jpg')",
