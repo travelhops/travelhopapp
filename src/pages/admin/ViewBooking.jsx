@@ -1,8 +1,34 @@
 import react from 'react';
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import AdminPanel from '../../Components/admin/AdminPanel';
 
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const ViewBooking = ()=>{
+
+    const {slug} = useParams();
+    const API_URL = process.env.API_URL;
+
+    const [order, setOrder] = useState({});
+
+    const getOrder = ()=>{
+        axios.get(API_URL+'/api/getOrder/'+slug, {
+            headers: {
+                'x-access-token': Cookies.get('token')
+            }
+        }).then(res=>{
+            if(res.data.order){
+                setOrder(res.data.order);
+            }
+        });
+    }
+
+    useEffect(()=>{
+        getOrder();
+    }, []);
+
     return (
         <div className="w-full flex">
             <div className="flex-[0_0_20%]">
@@ -21,17 +47,20 @@ const ViewBooking = ()=>{
                                 <li>Tour: </li>
                                 <li>Travel Date: </li>
                                 <li>From: </li>
-                                <li>No. of Person: </li>
+                                <li className="capitalize">No. of {Object.keys(order).length > 0?order.packageId?order.packageId.paxType:"Person":"Person"}: </li>
                             </ul>
 
-                            <ul className="text-[#2F6080] [&>li]:py-2">
-                                <li>#223345-987654</li>
-                                <li>May 4, 2024</li>
-                                <li>Dubai Tour Package</li>
-                                <li>May 14, 2024</li>
-                                <li>Delhi, India</li>
-                                <li>02</li>
-                            </ul>
+                                {Object.keys(order).length > 0?
+                                    <ul className="text-[#2F6080] [&>li]:py-2">
+                                        <li>#{order._id}</li>
+                                        <li>{new Date(order.bookingDate).toLocaleString("en-IN", {day: 'numeric', month: 'long', year: 'numeric'})}</li>
+                                        <li>{order.packageId?order.packageId.tourName:"Pacakge deleted"}</li>
+                                        <li>{new Date(order.departureDate).toLocaleString("en-IN", {day: 'numeric', month: 'long', year: 'numeric'})}</li>
+                                        <li>{order.departureLocation}</li>
+                                        <li>{order.paxSize}</li>
+
+                                    </ul>:""
+                                }
                         </div>
                     </div>
                     <div className="flex flex-col">
@@ -45,18 +74,20 @@ const ViewBooking = ()=>{
                                 <li>Contact No: </li>
                             </ul>
 
-                            <ul className="text-[#2F6080] [&>li]:py-2">
-                                <li>Suyash Yadav</li>
-                                <li>Yadav</li>
-                                <li>client@gmail.com</li>
-                                <li>9876543210</li>
-                            </ul>
+                            {Object.keys(order).length > 0?
+                                <ul className="text-[#2F6080] [&>li]:py-2">
+                                    <li>{order.travelerId.firstName}</li>
+                                    <li>{order.travelerId.firstName}</li>
+                                    <li>{order.travelerId.email}</li>
+                                    <li>{order.travelerId.contact}</li>
+                                </ul>:""
+                            }
                         </div>
 
                         <h2 className="uppercase text-3xl mt-3">Pricing</h2>
                         <hr className="my-3 border border-solid border-gray-300"/>
                         <div className="text-gray-700 text-xl">
-                            Total Amount:&nbsp;&nbsp;<span className="text-red-500">$24,000</span>
+                            Total Amount:&nbsp;&nbsp;<span className="text-red-500">₹{Object.keys(order).length > 0?order.totalAmount:'0'}</span>
                         </div>
                             
                     </div>

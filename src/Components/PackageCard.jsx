@@ -20,7 +20,7 @@ const PackageCard = (props)=>{
                     {props.pkg.description}
                </p>
 
-                <Link to={"/packages/"+props.pkg.id} className="flex text-base font-semibold text-white bg-[#14B9D5] w-24 mt-auto justify-center my-2 p-2 rounded-full cursor-pointer">
+                <Link to={"/packages/"+props.pkg._id} className="flex text-base font-semibold text-white bg-[#14B9D5] w-24 mt-auto justify-center my-2 p-2 rounded-full cursor-pointer">
                     DETAILS
                 </Link>
             </div>

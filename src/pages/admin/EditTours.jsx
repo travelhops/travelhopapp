@@ -1,5 +1,6 @@
-import react from 'react';
+import React from 'react';
 import {useState, useEffect} from 'react';
+import {useParams} from 'react-router-dom';
 import AdminPanel from '../../Components/admin/AdminPanel';
 import FloatingMessage from '../../Components/FloatingMessage';
 
@@ -8,20 +9,23 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 
 
-const CreateTours = ()=>{
+const EditTours = ()=>{
+
+    const {slug} = useParams();
 
 
     const API_URL = process.env.API_URL;
 
+
     const [bannerImg, setBannerImg] = useState();
-    const [tourName, setTourName] = useState();
-    const [country, setCountry] = useState();
-    const [packageType, setPackageType] = useState('default');
-    const [price, setPrice] = useState();
-    const [paxType, setPaxType] = useState();
-    const [paxSize, setPaxSize] = useState({});
-    const [duration, setDuration] = useState({});
-    const [description, setDescription] = useState();
+    const [tourName, setTourName] = useState('');
+    const [country, setCountry] = useState('');
+    const [packageType, setPackageType] = useState('');
+    const [price, setPrice] = useState(0);
+    const [paxType, setPaxType] = useState('');
+    const [paxSize, setPaxSize] = useState({minPax: 0, maxPax: 0});
+    const [duration, setDuration] = useState({day: 0, night: 0});
+    const [description, setDescription] = useState('');
     const [includes, setIncludes] = useState([]);
     const [excludes, setExcludes] = useState([]);
     const [tourPlan, setTourPlan] = useState([]);
@@ -76,15 +80,15 @@ const CreateTours = ()=>{
 
     const handlePaxSizeChange = (event)=>{
         const temp = paxSize;
-        temp[event.target.id] = parseInt(event.target.value);
+        temp[event.target.id] = parseInt(event.target.value) || 0;
 
-        setPaxSize(temp);
+        setPaxSize({...temp});
     }
 
     const handleDurationChange = (event)=>{
         const temp = duration;
-        temp[event.target.id] = parseInt(event.target.value);
-        setDuration(temp);
+        temp[event.target.id] = parseInt(event.target.value) || 0;
+        setDuration({...temp});
     }
 
     const handleDescriptionChange = (event)=>{
@@ -182,6 +186,27 @@ const CreateTours = ()=>{
     }
 
 
+    const getPackage = ()=>{
+        axios.get(API_URL+"/api/getPackage/"+slug).then(res=>{
+            if(res.data.package){
+                setTourName(res.data.package.destination);
+                setCountry(res.data.package.country);
+                setPackageType(res.data.package.packageType);
+                setPrice(res.data.package.price);
+                setPaxType(res.data.package.paxType);
+                setPaxSize(res.data.package.paxSize);
+                setDuration(res.data.package.duration);
+                setDescription(res.data.package.description);
+                setIncludes(res.data.package.inclusion);
+                setExcludes(res.data.package.exclusion);
+                setTourPlan(res.data.package.tourPlan);
+                setIsTopPackage(res.data.package.isTopPackage);
+            }
+        });
+    }
+
+
+
     const handleSubmit = (event)=>{
         event.preventDefault();
 
@@ -206,7 +231,6 @@ const CreateTours = ()=>{
             formData.append('images', img);
         });
 
-        console.log(Cookies.get('token'));
 
         const config = {
             headers: {
@@ -216,8 +240,9 @@ const CreateTours = ()=>{
         };
 
         handleFloatingMessage("Creating...", "bg-cyan-500", 5000);
+        console.log(formData);
 
-        axios.post(API_URL+"/api/createPackage", formData, config).then(res=>{
+        axios.put(API_URL+"/api/updatePackage/"+slug, formData, config).then(res=>{
             if(res.data.success){
                 handleFloatingMessage("New Tour Create", "bg-green-400", 4000);
             }
@@ -226,6 +251,11 @@ const CreateTours = ()=>{
             }
         });
     }
+
+
+    useEffect(()=>{
+        getPackage();
+    }, []);
 
 
     return (
@@ -248,14 +278,14 @@ const CreateTours = ()=>{
                         </div>
 
                         <label htmlFor="tourName">Tour Name:</label>
-                        <input type="text" id="tourName" placeholder="Tour Name" onChange={handleTourNameChange} required/>
+                        <input type="text" id="tourName" placeholder="Tour Name" value={tourName || ''} onChange={handleTourNameChange} required/>
 
                         <label htmlFor="country">Country:</label>
                         <div>
-                            <input type="text" id="country" placeholder="Country" onChange={handleCountryChange} required/>
+                            <input type="text" id="country" placeholder="Country" value={country || ''} onChange={handleCountryChange} required/>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <select value={packageType} className="p-3 bg-white border-[1px] border-gray-400" onChange={handlePackageTypeChange}>
-                                <option value="default" disabled >Domestic/Internation</option>
+                            <select value={packageType || ''} className="p-3 bg-white border-[1px] border-gray-400" onChange={handlePackageTypeChange}>
+                                <option disabled >Domestic/Internation</option>
                                 <option value="international">International</option>
                                 <option value="domestic">Domestic</option>
                             </select>
@@ -269,12 +299,12 @@ const CreateTours = ()=>{
                     <div className="adminSideForm">
                         <label htmlFor="price">Price:</label>
                         <div>
-                            <input type="text" id="price" placeholder="Price" onChange={handlePriceChange} required/>
+                            <input type="text" id="price" placeholder="Price" value={price || ''} onChange={handlePriceChange} required/>
                             <div className="[&>input]:w-fit [&>input]:text-green-600 mt-2">
-                                <input type="radio" value="person" id="person" name="paxType" onChange={handlePaxTypeChange}/>
+                                <input type="radio" value="person" id="person" name="paxType" checked={paxType === 'person'} onChange={handlePaxTypeChange}/>
                                 <label htmlFor="person">*person</label>
                                 &nbsp;&nbsp;&nbsp;
-                                <input type="radio" value="group" id="group" name="paxType" onChange={handlePaxTypeChange}/>
+                                <input type="radio" value="group" id="group" name="paxType" checked={paxType === 'group'} onChange={handlePaxTypeChange}/>
                                 <label htmlFor="group">*group</label>
                             </div>
                         </div>
@@ -282,19 +312,19 @@ const CreateTours = ()=>{
 
                         <label htmlFor="paxSize">Pax Size:</label>
                         <div className="[&>input]:w-[100px]">
-                            <input type="text" id="minPax" placeholder="Min Pax" onChange={handlePaxSizeChange} required/>
+                            <input type="text" id="minPax" placeholder="Min Pax" value={Object.keys(paxSize).length > 0?paxSize.minPax: ''} onChange={handlePaxSizeChange} required/>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="text" id="maxPax" placeholder="Max Pax" onChange={handlePaxSizeChange} required/>
+                            <input type="text" id="maxPax" placeholder="Max Pax" value={Object.keys(paxSize).length > 0?paxSize.maxPax: ''} onChange={handlePaxSizeChange} required/>
                         </div>
 
 
                         <label htmlFor="duration">Duration:</label>
                         <div className="[&>input]:w-[100px]">
                             <label htmlFor="days">Day(s)</label>
-                            <input type="text" id="day" placeholder="" onChange={handleDurationChange} required/>
+                            <input type="text" id="day" placeholder="" value={Object.keys(duration).length > 0?duration.day: ''} onChange={handleDurationChange} required/>
                             &nbsp;&nbsp;&nbsp;&nbsp;
                             <label htmlFor="nights">Night(s)</label>
-                            <input type="text" id="night" placeholder="" onChange={handleDurationChange} required/>
+                            <input type="text" id="night" placeholder="" value={Object.keys(duration).length > 0?duration.night: ''} onChange={handleDurationChange} required/>
                         </div>
                     </div>
 
@@ -303,7 +333,7 @@ const CreateTours = ()=>{
 
                     <div className="adminSideForm">
                         <label htmlFor="description" className="self-baseline">Description</label>
-                        <textarea id="description" rows="5" placeholder="Overview of the trip..." className="w-[600px]" onChange={handleDescriptionChange} required></textarea>
+                        <textarea id="description" rows="5" placeholder="Overview of the trip..." className="w-[600px]" value={description || ''} onChange={handleDescriptionChange} required></textarea>
                     </div>
 
                     <hr/>
@@ -314,7 +344,7 @@ const CreateTours = ()=>{
                             <div>
 
                                 {includes.map((item, index)=>{
-                                    return (<><input type="text" index={index} placeholder="Add Includes" value={item} onChange={handleIncludesChange} className="mb-4" required/><br/></>)
+                                    return (<React.Fragment key={index}><input type="text" index={index} placeholder="Add Includes" value={item} onChange={handleIncludesChange} className="mb-4" required/><br/></React.Fragment>)
                                 })}
 
                                 <button type="button" onClick={addIncludes}>Add Includes</button>
@@ -324,7 +354,7 @@ const CreateTours = ()=>{
                             <div>
 
                                  {excludes.map((item, index)=>{
-                                     return (<><input type="text" index={index} placeholder="Add Excludes" value={item} onChange={handleExcludesChange} className="mb-4" required/><br/></>)
+                                     return (<React.Fragment key={index}><input type="text" index={index} key={index} placeholder="Add Excludes" value={item} onChange={handleExcludesChange} className="mb-4" required/><br/></React.Fragment>)
                                 })}
                                 <button type="button" onClick={addExcludes}>Add Excludes</button>
 
@@ -340,12 +370,12 @@ const CreateTours = ()=>{
                         <div>
                             {tourPlan.map((item, index)=>{
                                 return (
-                                    <>
-                                        <input text="text" readOnly={true} value={"Day "+(index+1)} className="mb-4" />
+                                    <React.Fragment key={index}>
+                                        <input text="text" key={index} readOnly={true} value={"Day "+(index+1)} className="mb-4"/>
                                         <br/>
                                         <textarea index={index} placeholder="Description..." value={item} onChange={handleTourPlanChange} className="w-[500px] mb-6" required></textarea>
                                         <br/>
-                                    </>
+                                    </React.Fragment>
                                     )
                             })} 
                             <button type="button" onClick={addTourPlan} className="mt-4">+ Add Days</button>
@@ -366,16 +396,17 @@ const CreateTours = ()=>{
                             <div id="imagesDiv" className="mt-4">
                             </div>
                         </div>
-
                     </div>
 
-                    <input type="checkbox" id="isTopPackage" onChange={handleIsTopChange} />
+                    <input type="checkbox" id="isTopPackage" checked={isTopPackage} onChange={handleIsTopChange} />
                     &nbsp;
                     <label htmlFor="isTopPackage" className="text-gray-500">Add to Top Packages</label>
                     <br/>
                     <br/>
-                    <button className="cyan-button">Create Tour Package</button>
+                    <button className="cyan-button">Edit Tour Package</button>
                 </form>
+
+
 
 
             </div>
@@ -384,4 +415,4 @@ const CreateTours = ()=>{
 }
 
 
-export default CreateTours;
+export default EditTours;

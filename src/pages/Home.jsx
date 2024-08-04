@@ -17,8 +17,8 @@ const Home = ()=>{
 
     const [internationalPackages, setInternationalPackages] = useState([]);
     const [domesticPackages, setDomesticPackages] = useState([]);
+    const [testimonials, setTestimonials] = useState([]);
     const API_URL = process.env.API_URL;
-    console.log(API_URL);
 
     const backgroundImageCss = {
             backgroundImage: "linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3618697478991597) 50% ), linear-gradient( to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.3618697478991597) 20% ), url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1714766884/hero-image.jpg')",
@@ -30,22 +30,27 @@ const Home = ()=>{
     }
 
     const getInternationalPackages = ()=>{
-        axios.get(API_URL+"/api/getPackages?packageType=international&isTopPackage=true").then(res=>{
+        axios.get(API_URL+"/api/searchPackages?search=international&topPackage=true").then(res=>{
             setInternationalPackages(res.data.packages);
         });
     }
 
     const getDomesticPackages = ()=>{
-        axios.get(API_URL+"/api/getPackages?packageType=domestic&isTopPackage=true").then(res=>{
+        axios.get(API_URL+"/api/searchPackages?search=domestic&topPackage=true").then(res=>{
             setDomesticPackages(res.data.packages);
         });
     }
 
-    useEffect(()=>{
+    const getTestimonials = ()=>{
+        axios.get(API_URL+"/api/getTestimonials").then(res=>{
+            setTestimonials(res.data.testimonials);
+        });
+    }
 
+    useEffect(()=>{
         getInternationalPackages();
         getDomesticPackages();
-
+        getTestimonials();
     }, []);
 
     return (
@@ -56,7 +61,7 @@ const Home = ()=>{
             </Helmet>
 
             <main>
-                <div className="flex items-center justify-center h-screen w-screen"  style={backgroundImageCss}>
+                <div className="flex items-center justify-center h-screen w-full"  style={backgroundImageCss}>
                     <div className="text-white w-9/12 mt-28 sm:mt-20 md:mt-18">
                         <h1 className="text-4xl sm:text-5xl md:text-6xl">Time to Travel!</h1>
                         <br/>
@@ -71,7 +76,7 @@ const Home = ()=>{
             
 
             {/*Top International Packages Start*/}
-            <main className="w-full md:w-[95%] mx-auto flex justify-center items-center flex-col py-12 md:flex-row">
+            <main className="w-full md:w-[95%] mx-auto flex justify-center items-center flex-col py-12 md:flex-row overflow-hidden">
                 <div className="w-[80%] md:w-full flex-[20%] xl:ml-12 md:ml-6">
                     <div className="flex flex-col">
                         <p className="text-6xl 2xl:text-8xl lg:text-7xl font-qwigley text-[#FF5E5E]">Our Top</p>
@@ -132,26 +137,24 @@ const Home = ()=>{
             {/*Testimonial Start*/}
             <main className="relative flex justify-center items-center flex-col py-16 bg-[#E9F1F9] z-10">
                 
-                <div className="absolute top-0 right-0 z-[-1] w-full h-full bg-[url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1719142709/testimonial-bg-min.webp')] bg-cover bg-no-repeat bg-center"></div>
+                <div className="absolute top-0 right-0 z-[-1] w-full h-full bg-cover bg-no-repeat bg-center" style={{backgroundImage: "linear-gradient(rgba(0, 0, 200, 0.2), rgba(0, 0, 200, 0.2)),url('https://res.cloudinary.com/dfnpjjy2w/image/upload/v1719142709/testimonial-bg-min.webp')"}}></div>
                 
-                <h2 className="text-4xl">Testimonials</h2>
-                <p>What our Clients Says</p>
+                <h2 className="text-white text-3xl sm:text-4xl md:text-5xl">Testimonials</h2>
+                <p className="text-yellow-400 text-2xl sm:text-3xl md:text-4xl mb-4">What our Clients Says</p>
 
-                <TestimonialCarousal>
-                    <TestimonialCard/>
-                    <TestimonialCard/>
-                    <TestimonialCard/>
-                    <TestimonialCard/>
-                    <TestimonialCard/>
-                    <TestimonialCard/>
-                    <TestimonialCard/>
-                </TestimonialCarousal>
+                {testimonials.length > 0?(
+                    <TestimonialCarousal>
+                        {testimonials.map((testimonial, index)=>{
+                            return (<TestimonialCard data={testimonial} index={index} key={index}/>)
+                        })}
+                    </TestimonialCarousal>
+                ):""}
             </main>
             {/*Testimonial End*/}
 
             {/*Photo Gallery Start*/}
              <main className="flex justify-center items-center flex-col py-24 overflow-hidden">
-                <h2 className="text-4xl mb-24">Memories of our Clients</h2>
+                 <h2 className="text-3xl md:text-4xl mb-24 text-[#2F6080]">Memories of our Clients</h2>
 
                  <div className="grid grid-cols-2 sm:grid-cols-3 justify-center w-[80%] lg:w-[70%] gap-2 md:gap-5">
                      <div className="flex flex-col gap-2 md:gap-5">
@@ -177,4 +180,3 @@ const Home = ()=>{
 
 export default Home;
 
-//<img src="https://res.cloudinary.com/dfnpjjy2w/image/upload/v1714766884/hero-image.jpg" />

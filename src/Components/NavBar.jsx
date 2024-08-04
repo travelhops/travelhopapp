@@ -20,7 +20,7 @@ const NavBar = ()=>{
 
     return (
         <nav className="container flex w-9/12 items-center">
-            <img src={Logo} className="w-24 ml-4 md:ml-0"/>
+            <img src={Logo} className="w-20 md:w-24 ml-4 md:ml-0"/>
             <ul className="absolute transform translate-x-[150%] md:translate-x-0 left-0 top-0 p-12 bg-[#051E30] w-screen h-screen md:h-auto md:w-auto text-lg md:p-0 md:ml-auto *:p-4 text-white text-xl md:flex md:static md:bg-transparent md:py-0  text-nowrap duration-500" >
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/packages">Packages</Link></li>

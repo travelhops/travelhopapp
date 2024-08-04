@@ -1,13 +1,11 @@
 import react from 'react';
-import {useEffect, forwardRef, useImperativeHandle} from 'react';
+import {useEffect, useRef, forwardRef, useImperativeHandle} from 'react';
 
 const StarSelection = (props, ref)=>{
 
-    
-    let stars = 0;
+    const stars = useRef(0);
 
-    const setStars = (input, inputs)=>{
-        const index = parseInt(input.getAttribute("data-index"))-1;
+    const setStars = (index, inputs)=>{
 
         for(let i = 0; i <= index; i++){
             inputs[i].checked = true;
@@ -17,14 +15,14 @@ const StarSelection = (props, ref)=>{
             inputs[i].checked = false;
         }
 
-        stars = index+1;
-
+        stars.current = index+1;
     }
 
 
     const getStars = ()=>{
-        return stars;
+        return stars.current;
     }
+
 
     useImperativeHandle(ref, () => ({
         getStars
@@ -36,38 +34,44 @@ const StarSelection = (props, ref)=>{
 
 
     useEffect(()=>{
-        const inputs = document.querySelectorAll(".starContainer input");
+        const inputs = document.querySelectorAll(`#starContainer${props.id} input`);
+
+        if(props.readOnly){
+            stars.current = props.starsCount;
+            setStars(stars.current-1, inputs);
+        }
+
         Array.from(inputs).forEach((input)=>{
             input.addEventListener("click", (event)=>{
-                setStars(event.target, inputs);
-                console.log(getStars());
+                if(!props.readOnly)
+                    setStars(parseInt(event.target.getAttribute("data-index"))-1, inputs);
             });
         });
     },[]);
 
     return (
-        <div className="starContainer" ref={ref}>
-            <input type="checkbox" id="star1" data-index="1" />
+        <div className="starContainer" ref={ref} id={"starContainer"+props.id}>
+            <input type="checkbox" id="star1" data-index="1" disabled={props.readOnly || false}/>
             <label htmlFor="star1">
                 <i className="fa-solid fa-star" aria-hidden></i>
             </label>
 
-            <input type="checkbox" id="star2" data-index="2" />
+            <input type="checkbox" id="star2" data-index="2" disabled={props.readOnly || false}/>
             <label htmlFor="star2">
                 <i className="fa-solid fa-star" aria-hidden></i>
             </label>
 
-            <input type="checkbox" id="star3" data-index="3" />
+            <input type="checkbox" id="star3" data-index="3" disabled={props.readOnly || false}/>
             <label htmlFor="star3">
                 <i className="fa-solid fa-star" aria-hidden></i>
             </label>
 
-            <input type="checkbox" id="star4" data-index="4" />
+            <input type="checkbox" id="star4" data-index="4" disabled={props.readOnly || false}/>
             <label htmlFor="star4">
                 <i className="fa-solid fa-star" aria-hidden></i>
             </label>
 
-            <input type="checkbox" id="star5" data-index="5" />
+            <input type="checkbox" id="star5" data-index="5" disabled={props.readOnly || false}/>
             <label htmlFor="star5">
                 <i className="fa-solid fa-star" aria-hidden></i>
             </label>

@@ -1,7 +1,7 @@
 import react from 'react';
 import AdminPanel from '../../Components/admin/AdminPanel';
 
-const Gallery = ()=>{
+const GalleryAdmin = ()=>{
 
 
     const imagesUrl = [
@@ -42,4 +42,4 @@ const Gallery = ()=>{
 }
 
 
-export default Gallery;
+export default GalleryAdmin;

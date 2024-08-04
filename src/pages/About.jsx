@@ -81,7 +81,7 @@ const About = ()=>{
 
             <main className="w-full bg-right md:bg-center flex items-center justify-center" style={backgroundImageCss}>
                 <div className="text-white w-9/12 mt-28 sm:mt-20 md:mt-18">
-                    <h1 className="font-playwrite text-4xl sm:text-6xl md:text-7xl">About Us</h1>
+                    <h1 className="font-arial text-5xl sm:text-6xl md:text-7xl font-bold">About Us</h1>
                     <br/>
                     <br/>
                     <p className="font-poppins md:leading-normal text-lg w-full sm:w-7/12 md:w-9/12 sm:text-xl md:text-2xl">
@@ -181,7 +181,7 @@ const About = ()=>{
                     <button className="absolute block min-[990px]:hidden top-0 right-0 -translate-y-1/2 p-4 mr-4 bg-white/[0.5] rounded-full shadow-xl duration-300 hover:bg-[#14B9D5] hover:text-white" onClick={()=>{leftSlide(whyChooseSlider)}}><i aria-hidden className="fa-solid fa-arrow-right pointer-events-none"></i></button>
 
                     <button className="absolute block min-[990px]:hidden top-0 left-0 -translate-y-1/2 p-4 ml-4 bg-white/[0.5] rounded-full shadow-xl duration-300 hover:bg-[#14B9D5] hover:text-white" onClick={()=>{rightSlide(whyChooseSlider)}}><i aria-hidden className="fa-solid fa-arrow-left pointer-events-none"></i></button>
-                    <Link to="/" className="px-8 py-4 w-fit rounded-xl bg-[#2E6080] shadow-[inset_0_1.9px_1.9px_rgba(0,0,0,0.25)] text-white text-2xl -translate-y-full" >Book Your Tour</Link>
+                    <Link to="/" className="-mt-20 px-8 py-4 w-fit rounded-xl bg-[#2E6080] shadow-[inset_0_1.9px_1.9px_rgba(0,0,0,0.25)] text-white text-2xl -translate-y-full" >Book Your Tour</Link>
                 </div>
 
 

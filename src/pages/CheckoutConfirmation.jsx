@@ -1,5 +1,9 @@
 import react from 'react';
+import {useEffect, useState} from 'react';
 import Layout from '../Components/Layout';
+import {Helmet} from "react-helmet-async";
+
+import {useLocation, useNavigate} from 'react-router-dom';
 
 const CheckoutConfirmation = ()=>{
 
@@ -12,10 +16,30 @@ const CheckoutConfirmation = ()=>{
 
     }
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(location.state == null){
+            navigate('/packages');
+        }
+    }, []);
+
+    if(location.state == null)
+        return null;
+
+
+    const {tourPackage, orderId, departureLocation, pax, departureDate} = location.state;
 
 
     return (
         <Layout>
+
+            <Helmet>
+                <title>Checkout</title>
+                <meta name="description" content="This is about page"/>
+            </Helmet>
+
              <main className="w-full flex justify-center items-end" style={backgroundImageCss}>
                 <div className="w-[80%] flex justify-center py-8">
                     <h1 className="text-4xl sm:text-6xl md:text-7xl text-white font-bold">Confirmation</h1>
@@ -32,17 +56,17 @@ const CheckoutConfirmation = ()=>{
                         <div>
                             <span className="font-bold">Order Number</span>
                             <br/>
-                            <span>#223345-987654</span>
+                            <span>#{orderId}</span>
                         </div>
                         <div>
                             <span className="font-bold">Date</span>
                             <br/>
-                            <span>05-05-2024</span>
+                            <span>{new Date(departureDate).toLocaleString("en-IN", {year: 'numeric', month: 'long', day: 'numeric'})}</span>
                         </div>
                         <div>
                             <span className="font-bold">Total Amount</span>
                             <br/>
-                            <span>$24,000</span>
+                            <span>₹{tourPackage.price*pax}</span>
                         </div>
                         <div className="md:!border-r-0">
                             <span className="font-bold">Payment Method</span>
@@ -54,19 +78,19 @@ const CheckoutConfirmation = ()=>{
 
                 <div className="w-[90%] md:w-[60%] flex flex-col text-xl lg:text-2xl text-[#2F6080]">
                     <ul className="px-4 [&>li]:my-2">
-                        <li className="!mb-4"><span className="font-bold">Bai, Indonesia</span></li>
-                        <li><span className="font-bold">Date: </span> May 5, 2024</li>
-                        <li><span className="font-bold">Duration: </span>3 Days / 4 Nights</li>
-                        <li><span className="font-bold">Departure From: </span>Delhi, India</li>
-                        <li><span className="font-bold">No. of Person: </span>02</li>
+                        <li className="!mb-4"><span className="font-bold">{tourPackage.destination}, {tourPackage.country}</span></li>
+                        <li><span className="font-bold">Date: </span>{new Date(departureDate).toLocaleString("en-IN", {year: 'numeric', month: 'long', day: 'numeric'})}</li>
+                        <li><span className="font-bold">Duration: </span>{tourPackage.duration.day} Days / {tourPackage.duration.night} Nights</li>
+                        <li><span className="font-bold">Departure From: </span>{departureLocation}</li>
+                        <li><span className="font-bold">No. of {tourPackage.paxType}: </span>{pax}</li>
                     </ul>
 
                     <div className="w-full text-right text-gray-600 p-8 bg-gray-200 mt-12 shadow-[inset_0_4px_4px_rgba(0,0,0,0.25)] font-bold [&>span]:text-black ">
-                        Total Amount : <span>$24,000</span> 
+                        Total Amount : <span>₹{tourPackage.price*pax}</span> 
                         <br/>
-                        Amount Paid : <span>$0</span> 
+                        Amount Paid : <span>₹0</span> 
                         <br/>
-                        Amount Due : <span className="!text-red-500">$24,000</span> 
+                        Amount Due : <span className="!text-red-500">₹{tourPackage.price*pax}</span> 
                     </div>
                 </div>
 

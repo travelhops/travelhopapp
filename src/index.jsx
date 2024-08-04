@@ -5,6 +5,7 @@ import App from './App';
 import { HelmetProvider } from 'react-helmet-async';
 
 
+
 hydrateRoot(document.getElementById('root'),
   <React.StrictMode>
     <HelmetProvider>
@@ -14,3 +15,4 @@ hydrateRoot(document.getElementById('root'),
     </HelmetProvider>
   </React.StrictMode>
 );
+
